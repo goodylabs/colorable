@@ -133,6 +133,7 @@ module Colorable
   class HSB < ColorSpace
     attr_accessor :hsb, :h, :s, :b
     def initialize(h=0,s=0,b=0)
+      h=0 if h==360
       @h, @s, @b = @hsb = validate_hsb([h, s, b])
     end
     alias :hue :h
@@ -238,7 +239,7 @@ module Colorable
           hex2rgb(validate_hex arg)
         else
           raise ArgumentError, "Accept only a Hex string or a Fixnum"
-        end 
+        end
       rgb = hex2rgb(self.hex).zip(_rgb).map { |x, y| (x.send(op, y)) % 256 }
       self.class.new rgb2hex(rgb)
     end
@@ -300,6 +301,6 @@ module Colorable
       } || begin
         raise ArgumentError, "'#{name}' is not in X11 colorset."
       end
-    end 
+    end
   end
-end  
+end
